@@ -1,28 +1,47 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <progress-bar></progress-bar>
+    <main class="main">
+      <sidebar></sidebar>
+      <router-view></router-view>
+    </main>
+
+    <div v-if='showBackToTop' class='back-to-top' @click='scrollToTop'>
+      <i class="fa fa-fighter-jet"></i>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { scrollSmoothTo } from './assets/js/utils'
+import ProgressBar from './components/ProgressBar'
+import Sidebar from './components/Sidebar'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    ProgressBar,
+    Sidebar
+  },
+  data () {
+    return {
+      showBackToTop: false
+    }
+  },
+  mounted () {
+    this.showBackToTop = document.documentElement.scrollTop > 800
+    window.addEventListener('scroll', () => {
+      this.showBackToTop = document.documentElement.scrollTop > 800
+    })
+  },
+  methods: {
+    scrollToTop () {
+      scrollSmoothTo(document.documentElement, 0)
+    }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+@import url(App.css);
 </style>
