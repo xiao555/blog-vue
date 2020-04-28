@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import App from './App.vue'
+import VueCompositionApi from '@vue/composition-api'
 
+import App from './App.vue'
 import Home from './views/Home'
 import Post from './views/Post'
 import About from './views/About'
@@ -26,6 +27,7 @@ const router = new VueRouter({
   ]
 })
 
+Vue.use(VueCompositionApi)
 Vue.use(VueRouter)
 
 Vue.config.productionTip = false
