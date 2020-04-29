@@ -15,29 +15,32 @@
 import articles from '../articles.json'
 import { getLocalYearMonthDay, useScrollHistory } from '../assets/js/utils'
 import Valine from 'valine'
+import { onMounted } from '@vue/composition-api'
 
 export default {
   name: 'Post',
-  data () {
-    const id = encodeURIComponent(this.$route.params.id)
+  setup (props, ctx) {
+    const id = encodeURIComponent(ctx.root.$route.params.id)
+    const article = articles.find(item => item.id === id)
+
+    useScrollHistory()
+
+    onMounted(() => {
+      document.title = `${article.title} | 打开天眼看文章`
+      new Valine({
+        el:'#vcomments',
+        appId: '2VQxghv1P34UuWX18ynpOBhX-gzGzoHsz',
+        appKey: 'IUpu9P5iuaym0hGnWxogUvon',
+        visitor: true,
+        recordIP: true,
+        path: article.id
+      })
+    })
+
     return {
       getLocalYearMonthDay,
-      article: articles.find(item => item.id === id)
+      article,
     }
-  },
-  mounted () {
-    document.title = `${this.article.title} | 打开天眼看文章`
-    new Valine({
-      el:'#vcomments',
-      appId: '2VQxghv1P34UuWX18ynpOBhX-gzGzoHsz',
-      appKey: 'IUpu9P5iuaym0hGnWxogUvon',
-      visitor: true,
-      recordIP: true,
-      path: this.article.id
-    })
-  },
-  setup () {
-    useScrollHistory()
   }
 }
 </script>

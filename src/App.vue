@@ -29,17 +29,6 @@ export default {
     const showBackToTop = computed(() => scrollTop.value > 800)
     const scrollToTop = () => scrollSmoothTo(document.documentElement, 0)
     return { showBackToTop, scrollToTop }
-
-    // const showBackToTop = ref(false)
-    // const scrollToTop = () => scrollSmoothTo(document.documentElement, 0)
-    // onMounted(() => {
-    //   console.log('mounted')
-    //   showBackToTop.value = document.documentElement.scrollTop > 800
-    //   window.addEventListener('scroll', () => {
-    //     showBackToTop.value = document.documentElement.scrollTop > 800
-    //   })
-    // })
-    // return { showBackToTop, scrollToTop }
   }
 }
 </script>
