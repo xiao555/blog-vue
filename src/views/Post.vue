@@ -13,13 +13,11 @@
 
 <script>
 import articles from '../articles.json'
-import { getLocalYearMonthDay } from '../assets/js/utils'
+import { getLocalYearMonthDay, useScrollHistory } from '../assets/js/utils'
 import Valine from 'valine'
-import scrollHistory from '../mixins/scroll-history'
 
 export default {
   name: 'Post',
-  mixins: [scrollHistory],
   data () {
     const id = encodeURIComponent(this.$route.params.id)
     return {
@@ -37,14 +35,9 @@ export default {
       recordIP: true,
       path: this.article.id
     })
-    // let historyMap = JSON.parse(window.localStorage.getItem('scroll-history')) || {}
-    // document.documentElement.scrollTop = historyMap[location.pathname] || 0
   },
-  beforeDestroy () {
-    // let historyMap = JSON.parse(window.localStorage.getItem('scroll-history')) || {}
-    // const scrollTop = document.documentElement.scrollTop
-    // historyMap[location.pathname] = scrollTop
-    // window.localStorage.setItem('scroll-history', JSON.stringify(historyMap))
+  setup () {
+    useScrollHistory()
   }
 }
 </script>

@@ -13,9 +13,10 @@
 </template>
 
 <script>
-import { scrollSmoothTo } from './assets/js/utils'
+import { scrollSmoothTo, useScroll } from './assets/js/utils'
 import ProgressBar from './components/ProgressBar'
 import Sidebar from './components/Sidebar'
+import { computed } from '@vue/composition-api'
 
 export default {
   name: 'App',
@@ -23,21 +24,22 @@ export default {
     ProgressBar,
     Sidebar
   },
-  data () {
-    return {
-      showBackToTop: false
-    }
-  },
-  mounted () {
-    this.showBackToTop = document.documentElement.scrollTop > 800
-    window.addEventListener('scroll', () => {
-      this.showBackToTop = document.documentElement.scrollTop > 800
-    })
-  },
-  methods: {
-    scrollToTop () {
-      scrollSmoothTo(document.documentElement, 0)
-    }
+  setup () {
+    const scrollTop = useScroll()
+    const showBackToTop = computed(() => scrollTop.value > 800)
+    const scrollToTop = () => scrollSmoothTo(document.documentElement, 0)
+    return { showBackToTop, scrollToTop }
+
+    // const showBackToTop = ref(false)
+    // const scrollToTop = () => scrollSmoothTo(document.documentElement, 0)
+    // onMounted(() => {
+    //   console.log('mounted')
+    //   showBackToTop.value = document.documentElement.scrollTop > 800
+    //   window.addEventListener('scroll', () => {
+    //     showBackToTop.value = document.documentElement.scrollTop > 800
+    //   })
+    // })
+    // return { showBackToTop, scrollToTop }
   }
 }
 </script>

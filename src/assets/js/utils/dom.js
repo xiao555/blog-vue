@@ -1,3 +1,5 @@
+import { ref, onMounted, onBeforeUnmount } from '@vue/composition-api'
+
 /**
  * 平滑滚动到指定位置
  * @param {Element} element - 平滑滚动的元素
@@ -26,4 +28,34 @@ export const scrollSmoothTo = (element, position) => {
     element.style.scrollBehavior = 'smooth'
     element.scrollTop = position
   }
+}
+
+export const useScroll = (element = document.documentElement) => {
+  const value = ref(0)
+
+  onMounted(() => {
+    value.value = element.scrollTop > 800
+    window.addEventListener('scroll', () => {
+      value.value = element.scrollTop
+    })
+  })
+
+  return value
+}
+
+let historyMap = JSON.parse(window.localStorage.getItem('scroll-history')) || {}
+
+export const useScrollHistory = () => {
+  const path = ref(location.pathname)
+
+  onMounted(() => {
+    document.documentElement.scrollTop = historyMap[path.value] || 0
+  })
+
+  onBeforeUnmount(() => {
+    const scrollTop = document.documentElement.scrollTop
+    historyMap[path.value] = scrollTop
+    window.localStorage.setItem('scroll-history', JSON.stringify(historyMap))
+    path.value = location.pathname
+  })
 }
