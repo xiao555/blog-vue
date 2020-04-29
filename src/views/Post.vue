@@ -37,14 +37,6 @@ export default {
       recordIP: true,
       path: this.article.id
     })
-    // let historyMap = JSON.parse(window.localStorage.getItem('scroll-history')) || {}
-    // document.documentElement.scrollTop = historyMap[location.pathname] || 0
   },
-  beforeDestroy () {
-    // let historyMap = JSON.parse(window.localStorage.getItem('scroll-history')) || {}
-    // const scrollTop = document.documentElement.scrollTop
-    // historyMap[location.pathname] = scrollTop
-    // window.localStorage.setItem('scroll-history', JSON.stringify(historyMap))
-  }
 }
 </script>
